@@ -1,0 +1,19 @@
+[
+  {
+    "text": "a b",
+    "true": [
+      {
+        "text": "a",
+        "type": "NAME",
+        "start": 0
+      }
+    ],
+    "predicted": [
+      {
+        "text": "a",
+        "type": "LOCATION",
+        "start": 0
+      }
+    ]
+  }
+]
