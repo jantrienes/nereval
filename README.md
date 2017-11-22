@@ -4,7 +4,7 @@ MUC-like evaluation script for named entity recognition systems as used in the a
 ## Installation
 ```sh
 git clone https://github.com/jantrienes/twente-arp-nlp-evaluation.git
-cd twente-arp-nlp-muceval
+cd twente-arp-nlp-evaluation
 # either install this as module via pip
 pip install .
 
