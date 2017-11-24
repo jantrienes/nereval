@@ -16,7 +16,7 @@ def has_overlap(x, y):
     """
     end_x = x.start + len(x.text)
     end_y = y.start + len(y.text)
-    return x.start <= end_y and y.start <= end_x
+    return x.start < end_y and y.start < end_x
 
 def correct_text(x, y):
     """
@@ -45,7 +45,7 @@ def count_correct(true, pred):
     -------
     count_text: int
         The number of entities predicted where the text matches exactly.
-    count_text: int
+    count_type: int
         The number of entities where the type is correctly predicted and the text overlaps.
     """
     count_text, count_type = 0, 0

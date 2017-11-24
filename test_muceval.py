@@ -13,6 +13,12 @@ def test_has_overlap():
     b = Entity('PLUG', 'Productname', 18)
     assert has_overlap(a, b) is False
 
+def test_has_overlap_open_interval():
+    a = Entity('PLUG', 'Productname', 0)
+    b = Entity('AB', 'Productname', 4)
+    assert has_overlap(a, b) is False
+    assert has_overlap(b, a) is False
+
 def test_entity():
     e = Entity('CILINDRISCHE PLUG', 'Productname', 0)
     assert e.text == 'CILINDRISCHE PLUG'
