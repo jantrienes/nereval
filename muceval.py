@@ -114,6 +114,9 @@ def evaluate(y_true, y_pred):
     >>> evaluate(y_true, y_pred)
     0.6666666666666666
     """
+    if len(y_true) != len(y_pred):
+        raise ValueError('Bad input shape: y_true and y_pred should have the same length.')
+
     correct, actual, possible = 0, 0, 0
 
     for x, y in zip(y_true, y_pred):

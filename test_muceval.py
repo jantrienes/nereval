@@ -1,4 +1,5 @@
 import os
+import pytest
 from muceval import (
     correct_text, correct_type, count_correct, has_overlap, Entity, precision, recall, evaluate,
     _parse_json, evaluate_json
@@ -149,6 +150,13 @@ def test_evaluate():
     # edge cases
     assert evaluate([x], [[]]) == 0
     assert evaluate([[]], [x]) == 0
+
+def test_evaluate_different_shapes():
+    x = [[], []]
+    y = [[], [], []]
+
+    with pytest.raises(ValueError):
+        evaluate(x, y)
 
 def test_parse_json():
     file_name = os.path.join(os.path.dirname(__file__), 'input.json')
