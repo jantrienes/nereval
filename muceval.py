@@ -1,4 +1,5 @@
 # pylint: disable=C0103
+from __future__ import division
 import argparse
 import collections
 import json

@@ -58,7 +58,7 @@ from muceval import Entity
 # CILINDRISCHE PLUG
 # B_PROD       I_PROD
 y_true = [
-    Entity("CILINDRISCHE PLUG", "Productname", 0)
+    Entity('CILINDRISCHE PLUG', 'Productname', 0)
 ]
 
 # Prediction:
@@ -66,12 +66,12 @@ y_true = [
 # B_PROD       B_PROD
 y_pred = [
     # correct type, wrong text
-    Entity("CILINDRISCHE", "Productname", 0),
+    Entity('CILINDRISCHE', 'Productname', 0),
     # correct type, wrong text
     Entity('PLUG', 'Productname', 13)
 ]
 
-score = muceval.evaluate([y_true],[y_pred])
+score = muceval.evaluate([y_true], [y_pred])
 print('F1-score: %.2f' % score)
 F1-score: 0.33
 ```
