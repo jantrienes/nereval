@@ -13,3 +13,11 @@ test-coverage:
 
 lint:
 	pylint nereval.py || exit 0
+
+pypi:
+	python setup.py sdist bdist_wheel
+	twine upload dist/*
+
+pypi-test:
+	python setup.py sdist bdist_wheel
+	twine upload --repository pypitest dist/*
