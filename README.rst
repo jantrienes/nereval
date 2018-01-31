@@ -21,9 +21,7 @@ Installation
 ------------
 .. code-block:: bash
 
-  git clone https://github.com/jantrienes/nereval.git
-  cd nereval
-  pip install .
+  pip install nereval
 
 
 Usage
