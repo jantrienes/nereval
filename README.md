@@ -1,4 +1,6 @@
 # nereval
+[![Build Status](https://travis-ci.org/jantrienes/nereval.svg?branch=master)](https://travis-ci.org/jantrienes/nereval)
+
 Evaluation script for named entity recognition (NER) systems based on entity-level F1 score.
 
 ## Definition
