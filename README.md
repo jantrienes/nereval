@@ -22,7 +22,7 @@ pip install .
 The script can either be used from within Python or from the command line when classification results have been written to a JSON file.
 
 ### Usage from Command Line
-Assume we have the following classification results in `examples/input.json`:
+Assume we have the following classification results in `input.json`:
 
 ```json
 [
@@ -54,7 +54,7 @@ Assume we have the following classification results in `examples/input.json`:
 Then the script can be executed as follows:
 
 ```sh
-python nereval.py examples/input.json
+python nereval.py input.json
 F1-score: 0.33
 ```
 
