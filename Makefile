@@ -9,7 +9,7 @@ test:
 	pytest
 
 test-coverage:
-	pytest --cov=muceval --cov-report term
+	pytest --cov=nereval --cov-report term
 
 lint:
-	pylint muceval.py || exit 0
+	pylint nereval.py || exit 0

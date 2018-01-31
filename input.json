@@ -1,18 +1,23 @@
 [
   {
-    "text": "a b",
+    "text": "CILINDRISCHE PLUG",
     "true": [
       {
-        "text": "a",
-        "type": "NAME",
+        "text": "CILINDRISCHE PLUG",
+        "type": "Productname",
         "start": 0
       }
     ],
     "predicted": [
       {
-        "text": "a",
-        "type": "LOCATION",
+        "text": "CILINDRISCHE",
+        "type": "Productname",
         "start": 0
+      },
+      {
+        "text": "PLUG",
+        "type": "Productname",
+        "start": 13
       }
     ]
   }

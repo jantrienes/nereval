@@ -105,7 +105,7 @@ def evaluate(y_true, y_pred):
 
     Example
     -------
-    >>> from muceval import Entity, evaluate
+    >>> from nereval import Entity, evaluate
     >>> y_true = [
     ...     [Entity('a', 'b', 0), Entity('b', 'b', 2)]
     ... ]
