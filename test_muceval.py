@@ -2,7 +2,7 @@ import os
 import pytest
 from muceval import (
     correct_text, correct_type, count_correct, has_overlap, Entity, precision, recall, evaluate,
-    _parse_json, evaluate_json
+    _parse_json, evaluate_json, sign_test
 )
 
 def test_has_overlap():
@@ -27,26 +27,26 @@ def test_entity():
     assert e.start == 0
 
 def test_correct_text_symmetry():
-    true = Entity("CILINDRISCHE PLUG", "Productname", 0)
-    pred = Entity("CILINDRISCHE", "Productname", 0)
+    true = Entity('CILINDRISCHE PLUG', 'Productname', 0)
+    pred = Entity('CILINDRISCHE', 'Productname', 0)
     assert correct_text(true, pred) is False
     assert correct_text(pred, true) is False
     assert correct_text(true, true) is True
     assert correct_text(pred, pred) is True
 
 def test_correct_text_without_overlap():
-    true = Entity("CILINDRISCHE PLUG", "Productname", 0)
-    pred = Entity("CILINDRISCHE PLUG", "Productname", 11)
+    true = Entity('CILINDRISCHE PLUG', 'Productname', 0)
+    pred = Entity('CILINDRISCHE PLUG', 'Productname', 11)
     assert correct_text(true, pred) is False
 
 def test_correct_text_type_mismatch():
-    true = Entity("a", "Productname", 0)
-    pred = Entity("a", "Material", 0)
+    true = Entity('a', 'Productname', 0)
+    pred = Entity('a', 'Material', 0)
     assert correct_text(true, pred) is True
 
 def test_correct_type_symmetry():
-    true = Entity("CILINDRISCHE PLUG", "Productname", 0)
-    pred = Entity("PLUG", "Productname", 13)
+    true = Entity('CILINDRISCHE PLUG', 'Productname', 0)
+    pred = Entity('PLUG', 'Productname', 13)
     assert correct_type(true, pred) is True
     assert correct_type(pred, true) is True
     assert correct_type(true, true) is True
@@ -58,35 +58,35 @@ def test_correct_type_with_overlap():
     assert correct_type(true, pred) is True
 
 def test_correct_type_without_overlap():
-    true = Entity("PLUG", "Productname", 0)
-    pred = Entity("CILINDRISCHE PLUG", "Productname", 21)
+    true = Entity('PLUG', 'Productname', 0)
+    pred = Entity('CILINDRISCHE PLUG', 'Productname', 21)
     assert correct_type(true, pred) is False
 
 def test_correct_type_with_mismatch():
-    true = Entity("PLUG", "Productname", 0)
-    pred = Entity("PLUG", "Material", 0)
+    true = Entity('PLUG', 'Productname', 0)
+    pred = Entity('PLUG', 'Material', 0)
     assert correct_type(true, pred) is False
 
 def test_count_correct():
     # CILINDRISCHE PLUG     DIN908  M10X1   foo
     # B_PROD       I_PROD   B_PROD  B_DIM   O
     x = [
-        Entity("CILINDRISCHE PLUG", "Productname", 0),
-        Entity("DIN908", "Productname", 18),
-        Entity("M10X1", "Dimension", 25)
+        Entity('CILINDRISCHE PLUG', 'Productname', 0),
+        Entity('DIN908', 'Productname', 18),
+        Entity('M10X1', 'Dimension', 25)
     ]
 
     # CILINDRISCHE PLUG     DIN908  M10X1   foo
     # B_PROD       B_PROD   B_PROD  B_PROD  B_PROD
     y = [
         # correct type, wrong text
-        Entity("CILINDRISCHE", "Productname", 0),
+        Entity('CILINDRISCHE', 'Productname', 0),
         # correct type, wrong text
         Entity('PLUG', 'Productname', 13),
         # correct type, correct text
-        Entity("DIN908", "Productname", 18),
+        Entity('DIN908', 'Productname', 18),
         # wrong type, correct text
-        Entity("M10X1", "Productname", 25),
+        Entity('M10X1', 'Productname', 25),
         # wrong type, wrong text (no entity)
         Entity('foo', 'Productname', 35)
     ]
@@ -121,22 +121,22 @@ def test_evaluate():
     # CILINDRISCHE PLUG     DIN908  M10X1   foo
     # B_PROD       I_PROD   B_PROD  B_DIM   O
     x = [
-        Entity("CILINDRISCHE PLUG", "Productname", 0),
-        Entity("DIN908", "Productname", 18),
-        Entity("M10X1", "Dimension", 25)
+        Entity('CILINDRISCHE PLUG', 'Productname', 0),
+        Entity('DIN908', 'Productname', 18),
+        Entity('M10X1', 'Dimension', 25)
     ]
 
     # CILINDRISCHE PLUG     DIN908  M10X1   foo
     # B_PROD       B_PROD   B_PROD  B_PROD  B_PROD
     y = [
         # correct type, wrong text
-        Entity("CILINDRISCHE", "Productname", 0),
+        Entity('CILINDRISCHE', 'Productname', 0),
         # correct type, wrong text
         Entity('PLUG', 'Productname', 13),
         # correct type, correct text
-        Entity("DIN908", "Productname", 18),
+        Entity('DIN908', 'Productname', 18),
         # wrong type, correct text
-        Entity("M10X1", "Productname", 25),
+        Entity('M10X1', 'Productname', 25),
         # wrong type, wrong text (no entity)
         Entity('foo', 'Productname', 35)
     ]
@@ -157,6 +157,16 @@ def test_evaluate_different_shapes():
 
     with pytest.raises(ValueError):
         evaluate(x, y)
+
+def test_sign_test():
+    x = [Entity('CILINDRISCHE PLUG', 'Productname', 0)]
+    y = [Entity('CILINDRISCHE', 'Productname', 0)]
+
+    assert sign_test([x], [x], [y]) == (0, 1)
+    assert sign_test([x], [y], [x]) == (1, 0)
+    assert sign_test([x], [x], [x]) == (0, 0)
+    assert sign_test([x, y], [[], []], [x, y]) == (2, 0)
+    assert sign_test([x, y], [x, y], [[], []]) == (0, 2)
 
 def test_parse_json():
     file_name = os.path.join(os.path.dirname(__file__), 'input.json')

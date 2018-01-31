@@ -128,6 +128,21 @@ def evaluate(y_true, y_pred):
 
     return f1(precision(correct, actual), recall(correct, possible))
 
+def sign_test(truth, model_a, model_b):
+    better = 0
+    worse = 0
+
+    for true, a, b in zip(truth, model_a, model_b):
+        score_a = evaluate([true], [a])
+        score_b = evaluate([true], [b])
+
+        if score_a - score_b > 0:
+            worse += 1
+        elif score_a - score_b < 0:
+            better += 1
+
+    return better, worse
+
 def _parse_json(file_name):
     data = None
 
@@ -155,7 +170,7 @@ def evaluate_json(file_name):
     return evaluate(y_true, y_pred)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='MUC evaluation of JSON results.')
+    parser = argparse.ArgumentParser(description='Compute F1 score for predictions in JSON file.')
     parser.add_argument('file_name', help='The JSON containing classification results')
     args = parser.parse_args()
 
