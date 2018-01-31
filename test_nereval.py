@@ -1,6 +1,6 @@
 import os
 import pytest
-from muceval import (
+from nereval import (
     correct_text, correct_type, count_correct, has_overlap, Entity, precision, recall, evaluate,
     _parse_json, evaluate_json, sign_test
 )
@@ -173,9 +173,10 @@ def test_parse_json():
     predictions = _parse_json(file_name)
     assert len(predictions) == 1
     instance = predictions[0]
-    assert instance['text'] == 'a b'
-    assert instance['true'][0] == Entity('a', 'NAME', 0)
-    assert instance['predicted'][0] == Entity('a', 'LOCATION', 0)
+    assert instance['text'] == 'CILINDRISCHE PLUG'
+    assert instance['true'][0] == Entity('CILINDRISCHE PLUG', 'Productname', 0)
+    assert instance['predicted'][0] == Entity('CILINDRISCHE', 'Productname', 0)
+    assert instance['predicted'][1] == Entity('PLUG', 'Productname', 13)
 
 def test_evaluate_json():
     file_name = os.path.join(os.path.dirname(__file__), 'input.json')
