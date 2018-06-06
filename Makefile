@@ -3,23 +3,23 @@
 all: init test test-coverage lint
 
 init:
-	pip install -r requirements.txt
+	pipenv install
 
 test:
-	pytest
+	pipenv run pytest
 
 test-coverage:
-	pytest --cov=nereval --cov-report term
+	pipenv run pytest --cov=nereval --cov-report term
 
 lint:
 	pylint nereval.py || exit 0
 
 pypi:
-	rm -r dist/
-	python setup.py sdist bdist_wheel
+	rm -fr dist/
+	pipenv run python setup.py sdist bdist_wheel
 	twine upload dist/*
 
 pypi-test:
-	rm -r dist/
-	python setup.py sdist bdist_wheel
+	rm -fr dist/
+	pipenv run python setup.py sdist bdist_wheel
 	twine upload --repository pypitest dist/*
