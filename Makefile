@@ -15,11 +15,11 @@ lint:
 	pylint nereval.py || exit 0
 
 pypi:
-	rm -r dist/
-	pipenv python setup.py sdist bdist_wheel
+	rm -fr dist/
+	pipenv run python setup.py sdist bdist_wheel
 	twine upload dist/*
 
 pypi-test:
-	rm -r dist/
-	pipenv python setup.py sdist bdist_wheel
+	rm -fr dist/
+	pipenv run python setup.py sdist bdist_wheel
 	twine upload --repository pypitest dist/*
