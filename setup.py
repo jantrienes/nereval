@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name='nereval',
-    version='0.2.4',
+    version='0.2.5',
     author='Jan Trienes',
     author_email='jan.trienes@googlemail.com',
     url='https://github.com/jantrienes/nereval',
